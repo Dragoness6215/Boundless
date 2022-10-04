@@ -1,3 +1,6 @@
+# RUNNING: navigate to that folder, and then call:
+# py -3 main.py   
+
 import discord
 from os import environ
 from dotenv import load_dotenv
@@ -35,7 +38,10 @@ async def on_message(message): ##called whenever the bot regesters a message
         await message.channel.send('Hello!')
 
     if message.content.startswith(prefix+'help'):
-        await message.channel.send(help())
+        await message.channel.send(help(message))
+    
+    if message.content.startswith(prefix+'r') or message.content.startswith(prefix+'R') or message.content.startswith(prefix+'roll') or message.content.startswith(prefix+'Roll'):
+        await message.channel.send(roll(message))
 
 ## Starts the running
 client.run(token)
