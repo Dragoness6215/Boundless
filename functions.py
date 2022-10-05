@@ -22,6 +22,7 @@ import random
                 #           chunked=False 
                 #           member_count=5>> 
 # flags=<MessageFlags value=0>>
+# .content which is message content
 
 #Called by Main for each call; named after it.
 ## Returns the help message

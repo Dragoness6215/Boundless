@@ -40,8 +40,10 @@ async def on_message(message): ##called whenever the bot regesters a message
     if message.content.startswith(prefix+'help'):
         await message.channel.send(help(message))
     
-    if message.content.startswith(prefix+'r') or message.content.startswith(prefix+'R') or message.content.startswith(prefix+'roll') or message.content.startswith(prefix+'Roll'):
+    elif message.content.startswith(prefix+'r') or message.content.startswith(prefix+'R') or message.content.startswith(prefix+'roll') or message.content.startswith(prefix+'Roll'):
         await message.channel.send(roll(message))
 
+    elif message.content.startswith(prefix):
+        await message.channel.send(message.author.mention+'I did not recognize that. Perhaps call **!help** for the list of all commands?')
 ## Starts the running
 client.run(token)
