@@ -58,4 +58,5 @@ def roll(message):
     return message.author.mention+finalMessage
 
 def prompt(message):
+    finalMessage="srsly"
     return message.author.mention+"This will be a prompt"
