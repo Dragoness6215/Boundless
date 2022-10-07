@@ -27,6 +27,8 @@ import random
 #Called by Main for each call; named after it.
 ## Returns the help message
 def help(message):
+    finalMessage=", these are the commands."
+    
     return message.author.mention+' This will be a help message'
 
 ## rolls xdy and returns a formatted message
@@ -35,7 +37,7 @@ def roll(message):
     firstSplit=message.content.split(' ')
     rollPartWhole=firstSplit[1].casefold().split('d')
     ##string trackers; finalMessage is returned and rollMessage is used for efficency to keep track of the rolls
-    finalMessage=message.author.mention+"\nRolled a total of "
+    finalMessage="\nRolled a total of "
     rollMessage=""
     ##used to track the total of the rolls
     total=0
@@ -53,5 +55,7 @@ def roll(message):
         for i in range(2,len(firstSplit)):
             finalMessage+=firstSplit[i]+" "
         finalMessage+="**"
-    return finalMessage
+    return message.author.mention+finalMessage
 
+def prompt(message):
+    return message.author.mention+"This will be a prompt"

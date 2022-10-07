@@ -1,6 +1,8 @@
 # RUNNING: navigate to that folder, and then call:
 # py -3 main.py   
 
+# Inform Seven
+
 import discord
 from os import environ
 from dotenv import load_dotenv
@@ -34,11 +36,11 @@ async def on_message(message): ##called whenever the bot regesters a message
     print("Recieved: "+ message.content)
 
     ## each of the commands
-    if message.content.startswith(prefix+'hello'):
-        await message.channel.send('Hello!')
-
     if message.content.startswith(prefix+'help'):
         await message.channel.send(help(message))
+
+    elif message.content.startswith(prefix+'prompt'):
+        await message.channel.send(prompt(message))
     
     elif message.content.startswith(prefix+'r') or message.content.startswith(prefix+'R') or message.content.startswith(prefix+'roll') or message.content.startswith(prefix+'Roll'):
         await message.channel.send(roll(message))
