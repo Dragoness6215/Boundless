@@ -28,11 +28,14 @@ async def getPlayerInfo(id):
     conn.close()
     return r
 
+## Player ('name', id, driveLink, fighting, newPrompt, makingChar)
 async def addPlayer(member):
     conn = await aiomysql.connect(host='localhost', port=3306, user='root', password=password, db='testserver',)
     cur = await conn.cursor() 
-    
-    querry="INSERT INTO players VALUES("+"'"+str(member.display_name)+"',"+str(member.id)+","+"''"+","+"'none'"+")"
+    name=str(member.display_name)
+    id=str(member.id)
+    driveLink="''"
+    querry="INSERT INTO players VALUES("+"'"+name+"',"+id+","+driveLink+","+"false"+","+"false"+","+"false"+")"
     print(querry)
     await cur.execute(querry) 
     await conn.commit()

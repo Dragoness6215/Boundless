@@ -31,12 +31,12 @@ client = discord.Client(intents=intents)
 async def on_ready(): 
     ##prints to the terminal once the bot's online
     print(f'We have logged in as {client.user}')
-    await guild.system_channel.send("@here Boundless is on!")
+    #await guild.system_channel.send("@here Boundless is on!")
     ##Test code to add all members to the database if need be.
     for guild in client.guilds:
         for member in guild.members:
             print(member.display_name)
-            ##if(member.display_name!="Boundless" and USE_MYSQL):
+            ##if(member.display_name!="Boundless" and not member.bot and USE_MYSQL ):
             ##    await addPlayer(member)
 
 ## ------------------------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ async def on_member_join(member): ##Called whenever the bot sees someone join
     for guild in client.guilds:
         for channel in guild.channels:
             if(channel.name=='general'):
-                await channel.send(member.mention+" Welcome! \n Call <***!help***> for help getting started! \nHere's the link to the full documentation: <TBD>")
+                await channel.send(member.mention+" Welcome! \n Call <***"+str(prefix)+"help***> for help getting started! \n Here's the link to the full documentation: <TBD>")
                 if(USE_MYSQL): await addPlayer(member)
 
 ## ------------------------------------------------------------------------------------------------
