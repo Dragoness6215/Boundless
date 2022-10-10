@@ -28,5 +28,14 @@ async def getPlayerInfo(id):
     conn.close()
     return r
 
-
+async def addPlayer(member):
+    conn = await aiomysql.connect(host='localhost', port=3306, user='root', password=password, db='testserver',)
+    cur = await conn.cursor() 
+    
+    querry="INSERT INTO players VALUES("+"'"+str(member.display_name)+"',"+str(member.id)+","+"''"+","+"'none'"+")"
+    print(querry)
+    await cur.execute(querry) 
+    await conn.commit()
+    await cur.close()
+    conn.close()
 

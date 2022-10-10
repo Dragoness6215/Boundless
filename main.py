@@ -1,8 +1,6 @@
 # RUNNING: navigate to that folder, and then call:
 # py -3 main.py   
 
-# Inform Seven
-
 import discord
 from os import environ
 from dotenv import load_dotenv
@@ -13,6 +11,8 @@ from mysql import *
 #Global Variables
 prefix="!"
 
+USE_MYSQL=True ##Easy way to enable/disable MySQL database code.
+
 ##Setting up hidden variables (we don't want people knowing the token)
 load_dotenv()
 token = environ["TOKEN"]
@@ -20,13 +20,42 @@ token = environ["TOKEN"]
 ##initializing the bot
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
+intents.guilds = True
+intents.presences = True
 client = discord.Client(intents=intents)
+
+## ------------------------------------------------------------------------------------------------
 
 @client.event
 async def on_ready(): 
     ##prints to the terminal once the bot's online
-    print(await getPlayerInfo(1))
     print(f'We have logged in as {client.user}')
+    await guild.system_channel.send("@here Boundless is on!")
+    ##Test code to add all members to the database if need be.
+    for guild in client.guilds:
+        for member in guild.members:
+            print(member.display_name)
+            ##if(member.display_name!="Boundless" and USE_MYSQL):
+            ##    await addPlayer(member)
+
+## ------------------------------------------------------------------------------------------------
+
+@client.event
+async def on_member_join(member): ##Called whenever the bot sees someone join
+    for guild in client.guilds:
+        for channel in guild.channels:
+            if(channel.name=='general'):
+                await channel.send(member.mention+" Welcome! \n Call <***!help***> for help getting started! \nHere's the link to the full documentation: <TBD>")
+                if(USE_MYSQL): await addPlayer(member)
+
+## ------------------------------------------------------------------------------------------------
+
+@client.event
+async def on_guild_join(guild):
+    print("Joined: "+str(guild.name))
+
+## ------------------------------------------------------------------------------------------------
 
 @client.event
 async def on_message(message): ##called whenever the bot regesters a message
@@ -40,10 +69,6 @@ async def on_message(message): ##called whenever the bot regesters a message
     if message.content.startswith(prefix+'help'):
         await message.channel.send(help(message))
 
-
-        #message.author.mention=@+ID
-        #message.author=playername#number
-
     elif message.content.startswith(prefix+'prompt'):
         await message.channel.send(message.author.mention+prompt(message))
     
@@ -52,5 +77,8 @@ async def on_message(message): ##called whenever the bot regesters a message
         
     elif message.content.startswith(prefix):
         await message.channel.send(message.author.mention+'I did not recognize that. Perhaps call **!help** for the list of all commands?')
-## Starts the running
+
+## ------------------------------------------------------------------------------------------------
+
+## Starts the bot running
 client.run(token)
