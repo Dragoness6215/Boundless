@@ -29,7 +29,7 @@ import random
 def help(message):
     finalMessage=", these are the commands."
     
-    return message.author.mention+' This will be a help message'
+    return ' This will be a help message'
 
 ## rolls xdy and returns a formatted message
 def roll(message):
@@ -55,8 +55,16 @@ def roll(message):
         for i in range(2,len(firstSplit)):
             finalMessage+=firstSplit[i]+" "
         finalMessage+="**"
-    return message.author.mention+finalMessage
+    return finalMessage
 
-def prompt(message):
-    finalMessage="srsly"
-    return message.author.mention+"This will be a prompt"
+def prompt(message): ##Didn't like global stuff?!?!
+    numTimesPromptCalled=0
+    numPeopleToCallPrompt=1
+    promptList=["Flood","Hurricane","Fire"]
+    numTimesPromptCalled+=1
+    finalMessage=""
+    if(numTimesPromptCalled<numPeopleToCallPrompt):
+        finalMessage="\n Need "+str(numPeopleToCallPrompt-numTimesPromptCalled)+" more people to get a prompt"
+    elif(numTimesPromptCalled==numPeopleToCallPrompt):
+        finalMessage="**\nNew Prompt: "+promptList[random.randrange(0,len(promptList))]+"**"
+    return finalMessage
